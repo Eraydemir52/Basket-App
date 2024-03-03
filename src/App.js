@@ -9,6 +9,7 @@ import {
   Group,
   Drawer,
   Indicator,
+  Badge,
 } from "@mantine/core";
 import Card from "./components/Card";
 import { IconCircleCheck, IconBasket } from "@tabler/icons-react";
@@ -16,31 +17,37 @@ import "./App.css";
 
 const storeItems = [
   {
+    id: "100",
     name: "Fotoğraf Makinesi",
     src: "camera",
     price: "20",
   },
   {
+    id: "101",
     name: "Kulaklık",
     src: "headphone",
     price: "25",
   },
   {
+    id: "102",
     name: "Oyun Konsolu",
     src: "joistick",
     price: "50",
   },
   {
+    id: "103",
     name: "Retro Fotoğraf Makinesi",
     src: "ret-camera",
     price: "50",
   },
   {
+    id: "104",
     name: "Oyucak Araba",
     src: "car",
     price: "50",
   },
   {
+    id: "105",
     name: "Kol Saati",
     src: "watch",
     price: "50",
@@ -54,6 +61,16 @@ function App() {
   let filterItems = storeItems.filter(
     (item) => item.name.toLowerCase().indexOf(searchvalue.toLowerCase()) >= 0
   );
+  let addToBasket = ({ id, name }) => {
+    let baksetIndex = basketıtems.findIndex((item) => item.id === id);
+    if (baksetIndex >= 0) {
+      let _basketItems = [...basketıtems];
+      _basketItems[baksetIndex].count += 1;
+      setBasketItems(_basketItems);
+    } else {
+      setBasketItems([...basketıtems, { id, name, count: 1 }]);
+    }
+  };
   return (
     <Container>
       <Group align="end">
@@ -72,13 +89,13 @@ function App() {
       </Group>
 
       <SimpleGrid cols={3} className="Store">
-        {filterItems.map(({ name, src }) => {
+        {filterItems.map(({ name, src, id }) => {
           return (
             <Card
               key={name}
               name={name}
               src={src}
-              onAdd={() => setBasketItems([...basketıtems, { name }])}
+              onAdd={() => addToBasket({ id, name })}
             />
           );
         })}
@@ -101,8 +118,12 @@ function App() {
             </ThemeIcon>
           }
         >
-          {basketıtems.map(({ name }, index) => (
-            <List.Item key={index}>{name}</List.Item>
+          {basketıtems.map(({ name, count }, index) => (
+            <List.Item key={index}>
+              <Group>
+                <div>{name}</div> <Badge>{count}</Badge>
+              </Group>
+            </List.Item>
           ))}
         </List>
       </Drawer>
