@@ -11,7 +11,7 @@ import {
   Indicator,
 } from "@mantine/core";
 import Card from "./components/Card";
-import { IconCircleCheck } from "@tabler/icons-react";
+import { IconCircleCheck, IconBasket } from "@tabler/icons-react";
 import "./App.css";
 
 const storeItems = [
@@ -65,7 +65,9 @@ function App() {
         </Input.Wrapper>
         <Button onClick={() => setSearchValue("")}>Temizle</Button>
         <Indicator color="red" label={basketıtems.length} size={22}>
-          <Button onClick={() => setOpened(true)}>Sepet</Button>
+          <Button onClick={() => setOpened(true)}>
+            <IconBasket size={22} />
+          </Button>
         </Indicator>
       </Group>
 
